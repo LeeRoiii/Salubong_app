@@ -1,0 +1,35 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:map_picker/map_picker.dart';
+
+class MapLocationPicker extends StatelessWidget {
+final Function(String) onLocationPicked;
+
+const MapLocationPicker({required this.onLocationPicked});
+
+@override
+Widget build(BuildContext context) {
+return Scaffold(
+appBar: AppBar(
+title: const Text('Pick a Location'),
+actions: [
+IconButton(
+icon: const Icon(Icons.done),
+onPressed: () {
+Navigator.pop(context); // Close the picker
+},
+),
+],
+),
+body: MapPicker(
+onMapCreated: (controller) {
+// This will be called when the map is created
+},
+onLocationPicked: (location) {
+onLocationPicked(location); // Pass selected location
+Navigator.pop(context); // Close the picker after selecting the location
+},
+),
+);
+}
+}

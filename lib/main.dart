@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart'; // Import Material to use MaterialApp
+import 'package:provider/provider.dart';
 import 'screens/events_screen.dart';
 import 'screens/add_event_screen.dart';
 import 'screens/settings_screen.dart';
+import 'helpers/font_provider.dart'; // Import the FontProvider
 
 void main() {
   runApp(SalubongApp());
@@ -10,10 +13,31 @@ void main() {
 class SalubongApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => FontProvider(), // Provide FontProvider to the app
+      child: Consumer<FontProvider>( // Listen to font provider changes
+        builder: (context, fontProvider, child) {
+          return MaterialApp(
+            title: 'Salubong App',
+            theme: ThemeData(
+              brightness: fontProvider.isDarkMode ? Brightness.dark : Brightness.light, // Adjust theme based on dark mode
+              primarySwatch: Colors.blue,
+            ),
+            home: CupertinoAppHome(), // This is where the Cupertino design begins
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CupertinoAppHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Salubong App',
-      theme: CupertinoThemeData(
-        primaryColor: const Color.fromARGB(255, 0, 0, 0),
+      theme: const CupertinoThemeData(
+        primaryColor: Color.fromARGB(255, 0, 0, 0),
       ),
       home: HomeScreen(),
     );

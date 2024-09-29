@@ -39,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               child: Text(
                 _isPickerVisible ? 'Hide Font Options' : 'Show Font Options',
-                style: TextStyle(
+                style: const TextStyle(
                   color: CupertinoColors.activeBlue,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -62,55 +62,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
             const SizedBox(height: 40),
-            const Text('Appearance Settings', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Dark Mode', style: TextStyle(fontSize: 18)),
-                CupertinoSwitch(
-                  value: fontProvider.isDarkMode,
-                  onChanged: (value) {
-                    fontProvider.toggleDarkMode(value);
-                    setState(() {}); // Refresh the UI
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            const Text('Notification Settings', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Enable Notifications', style: TextStyle(fontSize: 18)),
-                CupertinoSwitch(
-                  value: true, // Replace with actual state from your provider
-                  onChanged: (value) {
-                    // Handle notification toggle logic
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            const Text('Language Settings', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            GestureDetector(
-              onTap: () {
-                // Handle language selection here
-              },
-              child: Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey5,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: const Text(
-                  'Select Language',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
+
+
           ],
         ),
       ),

@@ -18,7 +18,6 @@ class BackgroundOptions extends StatefulWidget {
 class _BackgroundOptionsState extends State<BackgroundOptions> {
   final ColorPickerLogic colorPickerLogic = ColorPickerLogic();
   List<Map<String, dynamic>> _filteredColors = [];
-  String _searchTerm = '';
 
   @override
   void initState() {

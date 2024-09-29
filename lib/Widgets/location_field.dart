@@ -8,7 +8,7 @@ import 'package:latlong2/latlong.dart'; // Ensure to import latlong2 for LatLng
 class LocationField extends StatelessWidget {
   final TextEditingController locationController;
 
-  const LocationField({required this.locationController});
+  const LocationField({required this.locationController, required void Function() onLocationSelected});
 
   Future<void> _pickLocation(BuildContext context) async {
     LatLng? selectedLocation = await showDialog<LatLng?>(

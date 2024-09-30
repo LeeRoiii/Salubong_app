@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';   // Cupertino widgets
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' show ImagePicker, ImageSource, XFile;
+
 import '../Widgets/background_options.dart';
 import '../Widgets/event_suggestion.dart';
 import '../helpers/database_helper.dart';
@@ -66,8 +67,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   // Update the image selection and notify listeners
   Future<void> _selectImageFromGallery() async {
-    final XFile? pickedFile =
-    await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _backgroundImageUrl = pickedFile.path;
@@ -93,14 +94,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void _selectDate(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
-      builder: (_) => DatePickerWidget(
-        initialDate: _selectedDate,
-        onDateChanged: (date) {
-          setState(() {
-            _selectedDate = date;
-          });
-        },
-      ),
+      builder: (_) =>
+          DatePickerWidget(
+            initialDate: _selectedDate,
+            onDateChanged: (date) {
+              setState(() {
+                _selectedDate = date;
+              });
+            },
+          ),
     );
   }
 
@@ -116,7 +118,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
       DatabaseHelper.columnName: _eventNameController.text,
       DatabaseHelper.columnDate: _selectedDate.toIso8601String(),
       DatabaseHelper.columnReminder: _reminderController.text,
-      DatabaseHelper.columnLocation: _locationController.text.isNotEmpty ? _locationController.text : null,
+      DatabaseHelper.columnLocation: _locationController.text.isNotEmpty
+          ? _locationController.text
+          : null,
       DatabaseHelper.columnBackgroundImage: _backgroundImageUrl,
       DatabaseHelper.columnColor: _color.value,
     };
@@ -154,7 +158,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
           actions: <Widget>[
             CupertinoTheme(
               data: CupertinoThemeData(
-                primaryColor: CupertinoColors.black, // Set button color to black
+                primaryColor: CupertinoColors
+                    .black, // Set button color to black
               ),
               child: CupertinoDialogAction(
                 isDefaultAction: true,
@@ -162,7 +167,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                   if (isSuccess) {
-                    _clearForm();  // Clear the form on success
+                    _clearForm(); // Clear the form on success
                   }
                 },
               ),
@@ -177,62 +182,76 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: CupertinoPageScaffold(
-
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Use ValueListenableBuilder for the EventPreviewWidget
-                ValueListenableBuilder<String>(
-                  valueListenable: _eventNameNotifier,
-                  builder: (context, eventName, child) {
-                    return EventPreviewWidget(
-                      eventNameController: _eventNameController,
-                      selectedDate: _selectedDate,
-                      backgroundImageUrl: _backgroundImageUrl,
-                      backgroundGradient: _backgroundGradient,
-                      color: _color,
-                      location: _locationController.text,
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                EventTitleField(eventNameController: _eventNameController),
-                const SizedBox(height: 10),
-                EventSuggestions(
-                  suggestions: _eventSuggestions,
-                  onSuggestionSelected: (suggestion) {
-                    _eventNameController.text = suggestion;
-                    _eventNameNotifier.value = suggestion; // Update the notifier
-                  },
-                ),
-                const SizedBox(height: 20),
-                DateField(
-                  selectedDate: _selectedDate,
-                  onTap: () => _selectDate(context),
-                ),
-                const SizedBox(height: 20),
-                ReminderField(reminderController: _reminderController),
-                const SizedBox(height: 20),
-                LocationField(
-                  locationController: _locationController,
-                  onLocationSelected: () {}, // Optionally handle location changes
-                ),
-                const SizedBox(height: 20),
-                BackgroundOptions(
-                  onImageSelected: _selectImageFromGallery,
-                  onColorSelected: _setColorAndGradient,
-                ),
-                const SizedBox(height: 30),
-                Center(
-                  child: CupertinoButton.filled(
-                    onPressed: _saveEvent,
-                    child: const Text('Done'),
+          child: Container(
+            color: CupertinoColors.white, // Set background color to white
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ValueListenableBuilder<String>(
+                    valueListenable: _eventNameNotifier,
+                    builder: (context, eventName, child) {
+                      return EventPreviewWidget(
+                        eventNameController: _eventNameController,
+                        selectedDate: _selectedDate,
+                        backgroundImageUrl: _backgroundImageUrl,
+                        backgroundGradient: _backgroundGradient,
+                        color: _color,
+                        location: _locationController.text,
+                      );
+                    },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  EventTitleField(eventNameController: _eventNameController),
+                  const SizedBox(height: 10),
+                  EventSuggestions(
+                    suggestions: _eventSuggestions,
+                    onSuggestionSelected: (suggestion) {
+                      _eventNameController.text = suggestion;
+                      _eventNameNotifier.value =
+                          suggestion; // Update the notifier
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  DateField(
+                    selectedDate: _selectedDate,
+                    onTap: () => _selectDate(context),
+                  ),
+                  const SizedBox(height: 20),
+                  ReminderField(reminderController: _reminderController),
+                  const SizedBox(height: 20),
+                  LocationField(
+                    locationController: _locationController,
+                    onLocationSelected: () {}, // Optionally handle location changes
+                  ),
+                  const SizedBox(height: 20),
+                  BackgroundOptions(
+                    onImageSelected: _selectImageFromGallery,
+                    onColorSelected: _setColorAndGradient,
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 400,
+                    height: 50, // Set the desired height
+                    child: Center(
+                      child: CupertinoButton(
+                        color: CupertinoColors.black,
+                        // Set the button color to black
+                        borderRadius: BorderRadius.circular(8.0),
+                        // Optional: Add rounded corners
+                        onPressed: _saveEvent,
+                        child: const Text(
+                          'Done',
+                          style: TextStyle(color: CupertinoColors
+                              .white), // Set text color to white
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

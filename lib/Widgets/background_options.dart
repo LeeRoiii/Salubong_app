@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show BuildContext, Center, Color, Column, CrossAxisAlignment, CupertinoActionSheet, CupertinoActionSheetAction, CupertinoButton, CupertinoIcons, CupertinoTextField, EdgeInsets, FontWeight, Icon, ListView, MainAxisAlignment, Navigator, Padding, Row, SizedBox, State, StateSetter, StatefulBuilder, StatefulWidget, Text, TextStyle, VoidCallback, showCupertinoModalPopup;
+import 'package:flutter/material.dart';
 
 import 'color_picker.dart';
 
@@ -6,7 +7,8 @@ class BackgroundOptions extends StatefulWidget {
   final VoidCallback onImageSelected;
   final Function(Color) onColorSelected;
 
-  const BackgroundOptions({super.key,
+  const BackgroundOptions({
+    super.key,
     required this.onImageSelected,
     required this.onColorSelected,
   });
@@ -66,7 +68,10 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
           },
         ),
         cancelButton: CupertinoActionSheetAction(
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.black), // Set text color to black
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -81,7 +86,7 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
         children: [
           Icon(CupertinoIcons.circle_fill, color: color),
           const SizedBox(width: 8),
-          Text(label),
+          Text(label, style: const TextStyle(color: Colors.black)), // Set text color to black
         ],
       ),
       onPressed: () {
@@ -107,8 +112,8 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
               onPressed: widget.onImageSelected,
               child: const Column(
                 children: [
-                  Icon(CupertinoIcons.photo, size: 40),
-                  Text('Gallery'),
+                  Icon(CupertinoIcons.photo, size: 40, color: Colors.black), // Set icon color to black
+                  Text('Gallery', style: TextStyle(color: Colors.black)), // Set text color to black
                 ],
               ),
             ),
@@ -116,8 +121,8 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
               onPressed: () => _selectColor(context),
               child: const Column(
                 children: [
-                  Icon(CupertinoIcons.color_filter, size: 40),
-                  Text('Color'),
+                  Icon(CupertinoIcons.color_filter, size: 40, color: Colors.black), // Set icon color to black
+                  Text('Color', style: TextStyle(color: Colors.black)), // Set text color to black
                 ],
               ),
             ),
@@ -127,8 +132,8 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
               },
               child: const Column(
                 children: [
-                  Icon(CupertinoIcons.folder, size: 40),
-                  Text('Library'),
+                  Icon(CupertinoIcons.folder, size: 40, color: Colors.black), // Set icon color to black
+                  Text('Library', style: TextStyle(color: Colors.black)), // Set text color to black
                 ],
               ),
             ),
@@ -138,4 +143,3 @@ class _BackgroundOptionsState extends State<BackgroundOptions> {
     );
   }
 }
-

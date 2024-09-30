@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; // Import Material to use MaterialApp
+import 'package:flutter/material.dart';
+import 'package:myapp/screens/add_event_screen.dart';
+import 'package:myapp/screens/events_screen.dart';
+import 'package:myapp/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
-import 'screens/events_screen.dart';
-import 'screens/add_event_screen.dart';
-import 'screens/settings_screen.dart';
-import 'helpers/font_provider.dart'; // Import the FontProvider
+import 'screens/splash_screen.dart';
+import 'helpers/font_provider.dart';
 
 void main() {
   runApp(SalubongApp());
@@ -14,32 +15,14 @@ class SalubongApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FontProvider(), // Provide FontProvider to the app
-      child: Consumer<FontProvider>( // Listen to font provider changes
-        builder: (context, fontProvider, child) {
-          return MaterialApp(
-            title: 'Salubong App',
-            theme: ThemeData(
-              brightness: fontProvider.isDarkMode ? Brightness.dark : Brightness.light, // Adjust theme based on dark mode
-              primarySwatch: Colors.blue,
-            ),
-            home: CupertinoAppHome(), // This is where the Cupertino design begins
-          );
-        },
+      create: (context) => FontProvider(),
+      child: MaterialApp(
+        title: 'Salubong App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
       ),
-    );
-  }
-}
-
-class CupertinoAppHome extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: 'Salubong App',
-      theme: const CupertinoThemeData(
-        primaryColor: Color.fromARGB(255, 0, 0, 0),
-      ),
-      home: HomeScreen(),
     );
   }
 }
@@ -50,10 +33,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<NavigatorState> _eventsNavigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        activeColor: Colors.black, // Set active tab color to black
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.calendar),
@@ -72,7 +58,22 @@ class _HomeScreenState extends State<HomeScreen> {
       tabBuilder: (BuildContext context, int index) {
         switch (index) {
           case 0:
-            return CupertinoTabView(builder: (context) => EventsScreen());
+            return CupertinoTabView(
+              navigatorKey: _eventsNavigatorKey, // Set the navigator key for Events
+              builder: (context) {
+                return WillPopScope(
+                  onWillPop: () async {
+                    // Add this to refresh the EventsScreen when navigating back
+                    if (_eventsNavigatorKey.currentState!.canPop()) {
+                      _eventsNavigatorKey.currentState!.pop(); // Go back in the stack
+                      return false; // Prevent default pop behavior
+                    }
+                    return true; // Allow default pop behavior
+                  },
+                  child: EventsScreen(),
+                );
+              },
+            );
           case 1:
             return CupertinoTabView(builder: (context) => AddEventScreen());
           case 2:

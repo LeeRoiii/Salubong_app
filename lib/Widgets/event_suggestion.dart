@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show Axis, BuildContext, Column, CrossAxisAlignment, CupertinoButton, CupertinoColors, EdgeInsets, FontWeight, Padding, Row, SingleChildScrollView, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 
 class EventSuggestions extends StatelessWidget {
   final List<String> suggestions;

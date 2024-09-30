@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show BorderRadius, BoxDecoration, BoxFit, BoxShadow, BuildContext, ClipRRect, Color, Column, Container, CrossAxisAlignment, CupertinoColors, EdgeInsets, Expanded, FontWeight, GestureDetector, Gradient, Image, MainAxisAlignment, Offset, Positioned, Row, SizedBox, Stack, StatelessWidget, Text, TextAlign, TextEditingController, TextStyle, Widget;
 import 'package:intl/intl.dart' show DateFormat;
 
 class EventPreviewWidget extends StatelessWidget {

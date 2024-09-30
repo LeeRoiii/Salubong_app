@@ -1,9 +1,9 @@
 // location_field.dart
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show BuildContext, Column, CrossAxisAlignment, CupertinoColors, CupertinoIcons, CupertinoTextField, EdgeInsets, FontWeight, GestureDetector, Icon, Navigator, SizedBox, StatelessWidget, Text, TextEditingController, TextStyle, Widget;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart'; // Ensure to import latlong2 for LatLng
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, Column, CrossAxisAlignment, EdgeInsets, FontWeight, GestureDetector, Icon, Navigator, SizedBox, StatelessWidget, Text, TextEditingController, TextStyle, Widget, showDialog;
+import 'package:flutter_map/flutter_map.dart' show FlutterMap, MapOptions, TileLayer;
+import 'package:latlong2/latlong.dart' show LatLng;
 
 class LocationField extends StatelessWidget {
   final TextEditingController locationController;
